@@ -1,0 +1,16 @@
+{
+  "name": "allocate-interview",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cypress": "^14.2.0",
+    "typescript": "^5.8.2"
+  }
+}
