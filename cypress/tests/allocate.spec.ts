@@ -29,7 +29,7 @@ describe('allocate interview tests', () => {
             .then((n: number) => {
                 cy.contains('A Simple Todo List').should('be.visible');
                 cy.get('input[type="checkbox"]')
-                    .should('have.length', 5)
+                    .should('have.length', 5) // eventually replace 5 with n
                     .each(($el) => {
                         // Have to force check since the input is covered by a div
                         cy.wrap($el).check({ force: true });
@@ -55,18 +55,30 @@ describe('allocate interview tests', () => {
     })
 
     it('Confirm inability to submit without checking all todos', () => {
+        // Will spy on console.log to see what is returned from the app
+        cy.window()
+            .its('console')
+            .then((console) => {
+                cy.spy(console, 'log').as('log');
+            })
         // Loop through all checkboxes and confirm failed submission after each attempt
         cy.get('input[type="checkbox"]')
             .should('have.length', 5)
             .each(($el, i, $elArr) => {
-                // skip the last iteration
-                if (($elArr.length - 1) === i) return false;
+                // Click the submit button and confirm state
+                cy.contains('button', /submit/i).click();
+                // Get last call to console.log and verify what is printed
+                // we can't use should('have.returned') because console.log returns void
+                cy.get<Console>('@log')
+                    .invoke('getCalls')
+                    .then((calls: any[]) => calls[calls.length - 1])
+                    .should('have.a.property', 'lastArg', `unchecked: ${$elArr.length - i}`);
+                cy.get('.error').should('be.visible');
+                // Check off a todo prior to next iteration
                 cy.wrap($el)
                     .should('not.be.checked')
                     .check({ force: true });
                 cy.wrap($el).should('be.checked');
-                cy.contains('button', /submit/i).click();
-                cy.get('.error').should('be.visible');
             })
     })
 })

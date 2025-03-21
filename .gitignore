@@ -4,3 +4,7 @@ node_modules
 # Environment Variables
 cypress.env.json
 .env
+
+# Cypress
+cypress/screenshots
+cypress/downloads
