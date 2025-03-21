@@ -17,6 +17,8 @@ describe('allocate interview tests', () => {
             .then((body: todo[]) => {
                 // There is another non-obvious filter on the page
                 // the below filter returns 9 but there is always only 5 on the page.
+                // This is an instance where I would look at the code then reach out to a dev to better
+                // understand business logic
                 return body.filter(o => o.userId === 1 && !o.completed).length
             })
             .then((n: number) => {
@@ -24,6 +26,7 @@ describe('allocate interview tests', () => {
                 cy.get('input[type="checkbox"]')
                     .should('have.length', 5)
                     .each(($el) => {
+                        // Have to force check since the input is covered by a div
                         cy.wrap($el).check({ force: true });
                     })
             })
