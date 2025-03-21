@@ -11,6 +11,10 @@ describe('allocate interview tests', () => {
         cy.login();
     })
 
+    afterEach(() => {
+        indexedDB.deleteDatabase('firebaseLocalStorageDb');
+    })
+
     it('Create a todo then check all items and submit', () => {
         // Check all default todos
         cy.wait('@todos')
@@ -64,9 +68,5 @@ describe('allocate interview tests', () => {
                 cy.contains('button', /submit/i).click();
                 cy.get('.error').should('be.visible');
             })
-    })
-
-    afterEach(() => {
-        indexedDB.deleteDatabase('firebaseLocalStorageDb');
     })
 })
