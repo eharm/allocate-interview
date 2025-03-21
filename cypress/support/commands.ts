@@ -24,3 +24,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add(
+    'login',
+    (username: string = Cypress.env('username'), password: string = Cypress.env('password')) => {
+        cy.visit('/');
+        cy.intercept('GET', '**/todos').as('login_command');
+        cy.get('input#email').invoke('val').should('match', new RegExp(username, 'i'));
+        cy.get('input#password').type(password, { log: false });
+        cy.get('#sign-in-button-manual').click();
+        cy.wait('@login_command');
+    }
+)

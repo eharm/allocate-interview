@@ -7,10 +7,8 @@ interface todo {
 
 describe('allocate interview tests', () => {
     beforeEach(() => {
-        cy.visit('/');
         cy.intercept('GET', '**/todos').as('todos');
-        cy.get('input#password').type('test123');
-        cy.get('#sign-in-button-manual').click();
+        cy.login();
     })
 
     it('login and complete default todos', () => {
