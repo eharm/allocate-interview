@@ -1,4 +1,3 @@
-/// types
 interface todo {
     userId: number;
     id: number;
@@ -14,7 +13,7 @@ describe('allocate interview tests', () => {
         cy.get('#sign-in-button-manual').click();
     })
 
-    it('login', () => {
+    it('login and complete default todos', () => {
         cy.wait('@todos')
             .its('response.body')
             .then((body: todo[]) => {
