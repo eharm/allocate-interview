@@ -8,5 +8,6 @@ export default defineConfig({
     specPattern: '**/*.spec.ts',
     viewportHeight: 1080,
     viewportWidth: 1920,
+    baseUrl: process.env.BASE_URL
   },
 });

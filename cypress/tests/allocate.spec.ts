@@ -37,8 +37,6 @@ describe('allocate interview tests', () => {
     })
 
     afterEach(() => {
-        cy.clearCookies();
-        cy.clearLocalStorage();
         indexedDB.deleteDatabase('firebaseLocalStorageDb');
     })
 })
